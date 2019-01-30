@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    h1 {background-color: whitesmoke;}
+    div {background-color: white;}
+    p {background-color: white;}
+    </style>
+    <meta charset="utf-8">
+    <title>CanvasJS SF Weather</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">    
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
+    <script type="text/javascript">
+           
+    window.onload = function() {
+        var dataPoints = [];
+        function getDataPointsFromCSV(csv) {
+            var dataPoints = csvLines = points = [];
+            csvLines = csv.split(/[\r?\n|\r|\n]+/);
+            // for (var i = 0; i < csvLines.length; i++)
+            for (var i = 0; i < 150; i++)
+                if (csvLines[i].length > 0) {
+                    points = csvLines[i].split(",");
+                    var parts = points[0].split('/');
+                    dataPoints.push({ 
+                        // x: Date(points[0]),
+                        x: new Date(parts[2],parts[0],parts[1]) ,
+                        y: parseFloat(points[1]) 		
+                    });
+                }
+            console.log(dataPoints);
+            return dataPoints;
+        }
+
+        function getDewFromCSV(csv) {
+            var dewPoints = dewLines = dewData = [];
+            dewLines = csv.split(/[\r?\n|\r|\n]+/);
+        //    for (var i = 0; i < csvLines.length; i++)
+            for (var i = 0; i < 150; i++)
+                if (dewLines[i].length > 0) {
+                    dewData = dewLines[i].split(",");
+                    var parts = dewData[0].split('/');
+                    dewPoints.push({ 
+                        // x: Date(points[0]),
+                        x: new Date(parts[2],parts[0],parts[1]) ,
+                        y: parseFloat(dewData[2]) 		
+                    });
+                }
+            console.log(dewPoints);
+            console.log(dewLines);
+            console.log(csv);
+            return dewPoints;
+        }
+
+        function getHumidityFromCSV(csv) {
+            var humidityPoints = humidityLines = humidityData = [];
+            humidityLines = csv.split(/[\r?\n|\r|\n]+/);
+//            for (var i = 0; i < csvLines.length; i++)
+            for (var i = 0; i < 150; i++)
+                if (humidityLines[i].length > 0) {
+                    humidityData = humidityLines[i].split(",");
+                    var parts = humidityData[0].split('/');
+                    humidityPoints.push({ 
+                        // x: Date(points[0]),
+                        x: new Date(parts[2],parts[0],parts[1]) ,
+                        y: parseFloat(humidityData[3]) 		
+                    });
+                }
+            console.log(humidityPoints);
+            return humidityPoints;
+        }
+        
+        // d3.csv("test.csv", function(error, data) {
+        $.get("test.csv", function(data){
+            console.log(data);
+            var chart = new CanvasJS.Chart("chartContainer", {
+                title: {
+                    text: "San Francisco Weather (Canvas)",
+                },
+                axisY: {
+                    title: "Temperature",
+                    valueFormatString: "##",
+                    interval: 10,
+                    suffix: " F"
+                },
+                axisX:{
+                    title: "8/29/2013 - 2/24/2014",
+                    valueFormatString: "MM/DD/YYYY" ,
+                    interval: 10,
+                    intervalType: "month"
+                },
+                data: [{
+                    type: "column",
+                    toolTipContent: "{x}: {y} degrees",
+                    showInLegend: true,
+                    legendText: "Mean Temperature",
+                    markerSize: 5,
+                    color: "rgba(54,158,173,.7)",
+                    dataPoints: getDataPointsFromCSV(data)
+                },
+                    {
+                    type: "area",
+                    toolTipContent: "{x}: {y} degrees",
+                    showInLegend: true,
+                    legendText: "Mean Dew Point",
+                    markerSize: 5,
+                    color: "rgba(25,75,100,.7)",
+                    dataPoints: getDewFromCSV(data)
+                },
+                    {
+                    type: "line",
+                    toolTipContent: "{x}: {y} degrees",
+                    showInLegend: true,
+                    legendText: "Mean Humidity",
+                    markerSize: 5,
+                    color: "rgba(10,200,80,.7)",
+                    dataPoints: getHumidityFromCSV(data)
+                    },
+                ]
+            });
+            
+            chart.render();
+        
+        });
+    }
+
+    </script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    </head>
+    <body style="background-color: white">
+        <div id="chartContainer" style="height: 300px; width: 100%;">
+        </div>
+    </body>
+    </html>
