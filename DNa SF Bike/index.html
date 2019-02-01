@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    h1 {background-color: whitesmoke;}
+    div {background-color: white;}
+    p {background-color: white;}
+    .ui-tabs-anchor {
+    outline: none;
+    }
+    </style>
+    <meta charset="utf-8">
+    <title>CanvasJS SF Weather</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">    
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
+    <script type="text/javascript"></script>
+    <script src="test.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    </head>
+    <body>
+        <div id="tabs" style="height: 100px">
+            <ul>
+                <li ><a href="#tabs-1"  style="font-size: 12px">Average</a></li>
+                <li ><a href="#tabs-2"  style="font-size: 12px">Maximum</a></li>
+                <li ><a href="#tabs-3"  style="font-size: 12px">Minimum</a></li>
+            </ul>
+            <div id="tabs-1" style="height: 300px">
+                <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+            </div>
+            <div id="tabs-2" style="height: 300px">
+                <div id="chartContainer2" style="height: 300px; width: 100%;"></div>
+            </div>
+            <div id="tabs-3" style="height: 300px">
+                <div id="chartContainer3" style="height: 300px; width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery-ui.1.11.2.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+    </body>
+    </html>
