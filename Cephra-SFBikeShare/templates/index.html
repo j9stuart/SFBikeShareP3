@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Most Popular Bike Stations</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div id="bar1"></div>
+    <br>
+    <br>
+    <select id="selCity" onchange="cityDataS(this.value)">
+        <option value="">Bay Area</option>
+        {% for city in cities %}
+        <option value="{{ city }}">{{ city }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <br>
+    <br>
+    <div id="bar2"></div>
+    <br>
+    <br>
+    <select id="selCity" onchange="cityDataE(this.value)">
+        <option value="">Bay Area</option>
+        {% for city in cities %}
+        <option value="{{ city }}">{{ city }}</option>
+        {% endfor %}
+    </select>
+
+    <script src="{{ url_for('static', filename='js/app-Copy1.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</body>
+</html>
