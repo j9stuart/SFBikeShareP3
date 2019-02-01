@@ -68,10 +68,16 @@
 // 1. Access three seperate csv files (test, testMax, testMin)
 // 2. Create skeleton for graphs
 // 3. Use f(x)'s to grab data points for Temperature, Dew Points, and Humidity
+// 4. Issue w/ charts automatically resizing themselves
+//    > Resolved: Hardcoded height and width for each chart
 // --------------------------------------------------------------------------------
+        var chart;
+
         $.get("test.csv", function(data){
             // console.log(data);
-            var chart = new CanvasJS.Chart("chartContainer", {
+            chart = new CanvasJS.Chart("chartContainer", {
+                height: 250,
+                width: 1000,
                 animationEnabled: true,
                 title: {
                     text: "San Francisco Weather (Canvas) [Average]",
@@ -121,9 +127,14 @@
             chart.render();
         
         });
+
+        var chart2;
+
         $.get("testMax.csv", function(data){
             // console.log(data);
-            var chart2 = new CanvasJS.Chart("chartContainer2", {
+            chart2 = new CanvasJS.Chart("chartContainer2", {
+                height: 250,
+                width: 1000,
                 animationEnabled: true,
                 title: {
                     text: "San Francisco Weather (Canvas) [Maximum]",
@@ -174,9 +185,13 @@
         
         });
 
+        var chart3;
+
         $.get("testMin.csv", function(data){
             // console.log(data);
-            var chart3 = new CanvasJS.Chart("chartContainer3", {
+            chart3 = new CanvasJS.Chart("chartContainer3", {
+                height: 250,
+                width: 1000,
                 animationEnabled: true,
                 title: {
                     text: "San Francisco Weather (Canvas) [Minimum]",
