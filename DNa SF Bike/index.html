@@ -21,11 +21,35 @@
     <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     </head>
     <body>
+
+<!-- <select class="dropdown" id="dd">
+  <option value="" selected="selected">Select: Weather Data</option>
+  <option value="chart">SF Weather Averages</option>
+</select>
+<div id="chartContainer" style="height: 360px; width: 100%;"></div>         -->
+
+<!-- <select class="dropdown" id="dd2">
+  <option value="" selected="selected">Select: Weather Data</option>
+  <option value="chart2">SF Weather Maximums</option>
+</select>
+<div id="chartContainer2" style="height: 360px; width: 100%;"></div>         -->
+
+<!-- <select class="dropdown" id="dd3">
+  <option value="" selected="selected">Select: Weather Data</option>
+  <option value="chart3">SF Weather Minimums</option>
+</select>
+<div id="chartContainer3" style="height: 360px; width: 100%;"></div>         -->
+
+
+
         <div id="tabs" style="height: 100px">
             <ul>
-                <li ><a href="#tabs-1"  style="font-size: 12px">Average</a></li>
-                <li ><a href="#tabs-2"  style="font-size: 12px">Maximum</a></li>
-                <li ><a href="#tabs-3"  style="font-size: 12px">Minimum</a></li>
+                <li ><a href="#tabs-1"  style="font-size: 12px">Weather: Temp/Dew/Humidity (Avg)</a></li>
+                <li ><a href="#tabs-2"  style="font-size: 12px">Weather: Temp/Dew/Humidity (Max)</a></li>
+                <li ><a href="#tabs-3"  style="font-size: 12px">Weather: Temp/Dew/Humidity (Min)</a></li>
+                <li ><a href="#tabs-4"  style="font-size: 12px">Weather: Visibility</a></li>
+                <li ><a href="#tabs-5"  style="font-size: 12px">Weather: Wind Speed</a></li>
+                <li ><a href="#tabs-6"  style="font-size: 12px">Weather: Sea Level Pressure</a></li>
             </ul>
             <div id="tabs-1" style="height: 300px">
                 <div id="chartContainer" style="height: 300px; width: 100%;"></div>
@@ -35,7 +59,15 @@
             </div>
             <div id="tabs-3" style="height: 300px">
                 <div id="chartContainer3" style="height: 300px; width: 100%;"></div>
-                </div>
+            </div>
+            <div id="tabs-4" style="height: 300px">
+                <div id="chartContainer4" style="height: 300px; width: 100%;"></div>
+            </div>
+            <div id="tabs-5" style="height: 300px">
+                <div id="chartContainer5" style="height: 300px; width: 100%;"></div>
+            </div>
+            <div id="tabs-6" style="height: 300px">
+                <div id="chartContainer6" style="height: 300px; width: 100%;"></div>
             </div>
         </div>
     <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
