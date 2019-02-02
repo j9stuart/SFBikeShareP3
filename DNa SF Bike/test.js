@@ -1,6 +1,16 @@
     window.onload = function() {
         var dataPoints = [];
- 
+        var dewPoints = [];
+        var humidityPoints = [];
+        var visbilityMaxPoints = [];
+        var visbilityAvgPoints = [];
+        var visbilityMinPoints = [];
+        var windMaxPoints = [];
+        var windAvgPoints = [];
+        var gustPoints = [];
+        var seaMaxPoints = [];
+        var seaAvgPoints = [];
+        var seaMinPoints = [];
 // --------------------------------------------------------------------------------
 // 1. f(x) getDataPointsFromCSV should do the following
 //    > initialize empty arrays for data points, lines, and transformed data points
@@ -64,21 +74,172 @@
             return humidityPoints;
         }
 
+        function getVisibilityMaxFromCSV(csv) {
+            var visibilityMaxPoints = visibilityMaxLines = visibilityMaxData = [];
+            visibilityMaxLines = csv.split(/[\r?\n|\r|\n]+/);
+            for (var i = 0; i < 150; i++)
+                if (visibilityMaxLines[i].length > 0) {
+                    visibilityMaxData = visibilityMaxLines[i].split(",");
+                    var parts = visibilityMaxData[0].split('/');
+                    visibilityMaxPoints.push({ 
+                        x: new Date(parts[2],parts[0],parts[1]) ,
+                        y: parseFloat(visibilityMaxData[1]) 		
+                    });
+                }
+            // console.log(humidityPoints);
+            return visibilityMaxPoints;
+        }
+
+        function getVisibilityAvgFromCSV(csv) {
+            var visibilityAvgPoints = visibilityAvgLines = visibilityAvgData = [];
+            visibilityAvgLines = csv.split(/[\r?\n|\r|\n]+/);
+            for (var i = 0; i < 150; i++)
+                if (visibilityAvgLines[i].length > 0) {
+                    visibilityAvgData = visibilityAvgLines[i].split(",");
+                    var parts = visibilityAvgData[0].split('/');
+                    visibilityAvgPoints.push({ 
+                        x: new Date(parts[2],parts[0],parts[1]) ,
+                        y: parseFloat(visibilityAvgData[2]) 		
+                    });
+                }
+            // console.log(humidityPoints);
+            return visibilityAvgPoints;
+        }
+
+        function getVisibilityMinFromCSV(csv) {
+            var visibilityMinPoints = visibilityMinLines = visibilityMinData = [];
+            visibilityMinLines = csv.split(/[\r?\n|\r|\n]+/);
+            for (var i = 0; i < 150; i++)
+                if (visibilityMinLines[i].length > 0) {
+                    visibilityMinData = visibilityMinLines[i].split(",");
+                    var parts = visibilityMinData[0].split('/');
+                    visibilityMinPoints.push({ 
+                        x: new Date(parts[2],parts[0],parts[1]) ,
+                        y: parseFloat(visibilityMinData[3]) 		
+                    });
+                }
+            // console.log(humidityPoints);
+            return visibilityMinPoints;
+        }
+
+
+        function getWindMaxFromCSV(csv) {
+            var windMaxPoints = windMaxLines = windMaxData = [];
+            windMaxLines = csv.split(/[\r?\n|\r|\n]+/);
+            for (var i = 0; i < 150; i++)
+                if (windMaxLines[i].length > 0) {
+                    windMaxData = windMaxLines[i].split(",");
+                    var parts = windMaxData[0].split('/');
+                    windMaxPoints.push({ 
+                        x: new Date(parts[2],parts[0],parts[1]) ,
+                        y: parseFloat(windMaxData[1]) 		
+                    });
+                }
+            // console.log(humidityPoints);
+            return windMaxPoints;
+        }
+
+        function getWindAvgFromCSV(csv) {
+            var windAvgPoints = windAvgLines = windAvgData = [];
+            windAvgLines = csv.split(/[\r?\n|\r|\n]+/);
+            for (var i = 0; i < 150; i++)
+                if (windAvgLines[i].length > 0) {
+                    windAvgData = windAvgLines[i].split(",");
+                    var parts = windAvgData[0].split('/');
+                    windAvgPoints.push({ 
+                        x: new Date(parts[2],parts[0],parts[1]) ,
+                        y: parseFloat(windAvgData[2]) 		
+                    });
+                }
+            // console.log(humidityPoints);
+            return windAvgPoints;
+        }
+
+        function getGustFromCSV(csv) {
+            var gustPoints = gustLines = gustData = [];
+            gustLines = csv.split(/[\r?\n|\r|\n]+/);
+            for (var i = 0; i < 150; i++)
+                if (gustLines[i].length > 0) {
+                    gustData = gustLines[i].split(",");
+                    var parts = gustData[0].split('/');
+                    gustPoints.push({ 
+                        x: new Date(parts[2],parts[0],parts[1]) ,
+                        y: parseFloat(gustData[3]) 		
+                    });
+                }
+            // console.log(humidityPoints);
+            return gustPoints;
+        }
+
+        function getSeaMaxFromCSV(csv) {
+            var seaMaxPoints = seaMaxLines = seaMaxData = [];
+            seaMaxLines = csv.split(/[\r?\n|\r|\n]+/);
+            for (var i = 0; i < 150; i++)
+                if (seaMaxLines[i].length > 0) {
+                    seaMaxData = seaMaxLines[i].split(",");
+                    var parts = seaMaxData[0].split('/');
+                    seaMaxPoints.push({ 
+                        x: new Date(parts[2],parts[0],parts[1]) ,
+                        y: parseFloat(seaMaxData[1]) 		
+                    });
+                }
+            // console.log(humidityPoints);
+            return seaMaxPoints;
+        }
+
+        function getSeaAvgFromCSV(csv) {
+            var seaAvgPoints = seaAvgLines = seaAvgData = [];
+            seaAvgLines = csv.split(/[\r?\n|\r|\n]+/);
+            for (var i = 0; i < 150; i++)
+                if (seaAvgLines[i].length > 0) {
+                    seaAvgData = seaAvgLines[i].split(",");
+                    var parts = seaAvgData[0].split('/');
+                    seaAvgPoints.push({ 
+                        x: new Date(parts[2],parts[0],parts[1]) ,
+                        y: parseFloat(seaAvgData[2]) 		
+                    });
+                }
+            // console.log(humidityPoints);
+            return seaAvgPoints;
+        }
+
+        function getSeaMinFromCSV(csv) {
+            var seaMinPoints = seaMinLines = seaMinData = [];
+            seaMinLines = csv.split(/[\r?\n|\r|\n]+/);
+            for (var i = 0; i < 150; i++)
+                if (seaMinLines[i].length > 0) {
+                    seaMinData = seaMinLines[i].split(",");
+                    var parts = seaMinData[0].split('/');
+                    seaMinPoints.push({ 
+                        x: new Date(parts[2],parts[0],parts[1]) ,
+                        y: parseFloat(seaMinData[3]) 		
+                    });
+                }
+            // console.log(humidityPoints);
+            return seaMinPoints;
+        }
 // --------------------------------------------------------------------------------
 // 1. Access three seperate csv files (test, testMax, testMin)
 // 2. Create skeleton for graphs
 // 3. Use f(x)'s to grab data points for Temperature, Dew Points, and Humidity
 // 4. Issue w/ charts automatically resizing themselves
 //    > Resolved: Hardcoded height and width for each chart
-// --------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------- 
         var chart;
+        var chart2;
+        var chart3;
+        var chart4;
+        var chart5;
+        var chart6;
 
-        $.get("test.csv", function(data){
-            // console.log(data);
+        $.get("../resources/test.csv", function(data){
             chart = new CanvasJS.Chart("chartContainer", {
                 height: 250,
-                width: 1000,
+                width: 1250,
                 animationEnabled: true,
+                exportEnabled: true,
+                zoomEnabled: true,
+                theme: "light2",
                 title: {
                     text: "San Francisco Weather (Canvas) [Average]",
                 },
@@ -95,7 +256,7 @@
                     intervalType: "month"
                 },
                 data: [{
-                    type: "column",
+                    type: "scatter",
                     toolTipContent: "{x}: {y} degrees",
                     showInLegend: true,
                     legendText: "Mean Temperature",
@@ -128,14 +289,14 @@
         
         });
 
-        var chart2;
-
-        $.get("testMax.csv", function(data){
-            // console.log(data);
+        $.get("../resources/testMax.csv", function(data){
             chart2 = new CanvasJS.Chart("chartContainer2", {
                 height: 250,
-                width: 1000,
+                width: 1250,
                 animationEnabled: true,
+                exportEnabled: true,
+                zoomEnabled: true,
+                theme: "light2",
                 title: {
                     text: "San Francisco Weather (Canvas) [Maximum]",
                 },
@@ -152,7 +313,7 @@
                     intervalType: "month"
                 },
                 data: [{
-                    type: "column",
+                    type: "scatter",
                     toolTipContent: "{x}: {y} degrees",
                     showInLegend: true,
                     legendText: "Max. Temperature",
@@ -185,14 +346,14 @@
         
         });
 
-        var chart3;
-
-        $.get("testMin.csv", function(data){
-            // console.log(data);
+        $.get("../resources/testMin.csv", function(data){
             chart3 = new CanvasJS.Chart("chartContainer3", {
                 height: 250,
-                width: 1000,
+                width: 1250,
                 animationEnabled: true,
+                exportEnabled: true,
+                zoomEnabled: true,
+                theme: "light2",
                 title: {
                     text: "San Francisco Weather (Canvas) [Minimum]",
                 },
@@ -209,7 +370,7 @@
                     intervalType: "month"
                 },
                 data: [{
-                    type: "column",
+                    type: "scatter",
                     toolTipContent: "{x}: {y} degrees",
                     showInLegend: true,
                     legendText: "Min. Temperature",
@@ -234,24 +395,227 @@
                     markerSize: 5,
                     color: "rgba(10,200,80,.7)",
                     dataPoints: getHumidityFromCSV(data)
-                    },
-                ]
-            });
-            
-            chart3.render();
-        
+                },
+            ]
+        });            
+        chart3.render();
+    });
+
+        $.get("../resources/testVisibility.csv", function(data){
+            chart4 = new CanvasJS.Chart("chartContainer4", {
+                height: 250,
+                width: 1250,
+                animationEnabled: true,
+                exportEnabled: true,
+                zoomEnabled: true,
+                theme: "light2",
+                title: {
+                    text: "San Francisco Weather (Canvas)",
+                },
+                axisY: {
+                    title: "Miles",
+                    valueFormatString: "##",
+                    interval: 2,
+                    suffix: " mi"
+                },
+                axisX:{
+                    title: "8/29/2013 - 2/24/2014",
+                    valueFormatString: "MM/DD/YYYY" ,
+                    interval: 10,
+                    intervalType: "month"
+                },
+                data: [{
+                    type: "splineArea",
+                    toolTipContent: "{x}: {y} miles",
+                    showInLegend: true,
+                    legendText: "Max. Visibility",
+                    markerSize: 5,
+                    color: "rgba(54,158,173,.7)",
+                    dataPoints: getVisibilityMinFromCSV(data)
+                },
+                {
+                    type: "splineArea",
+                    toolTipContent: "{x}: {y} miles",
+                    showInLegend: true,
+                    legendText: "Avg. Visibility",
+                    markerSize: 5,
+                    color: "rgba(25,75,100,.7)",
+                    dataPoints: getVisibilityAvgFromCSV(data)
+                },
+                {
+                    type: "scatter",
+                    toolTipContent: "{x}: {y} miles",
+                    showInLegend: true,
+                    legendText: "Min. Visibility",
+                    markerSize: 5,
+                    color: "rgba(10,200,80,.7)",
+                    dataPoints: getVisibilityMaxFromCSV(data)
+                }
+            ]
         });
+        chart4.render();        
+    });
+
+        $.get("../resources/testWind.csv", function(data){
+            chart5 = new CanvasJS.Chart("chartContainer5", {
+                height: 250,
+                width: 1250,
+                animationEnabled: true,
+                exportEnabled: true,
+                zoomEnabled: true,                
+                theme: "light2",
+                title: {
+                    text: "San Francisco Weather (Canvas)",
+                },
+                axisY: {
+                    title: "Miles per Hour",
+                    valueFormatString: "##",
+                    interval: 10,
+                    suffix: " mph"
+                },
+                axisX:{
+                    title: "8/29/2013 - 2/24/2014",
+                    valueFormatString: "MM/DD/YYYY" ,
+                    interval: 10,
+                    intervalType: "month"
+                },
+                data: [{
+                    type: "splineArea",
+                    toolTipContent: "{x}: {y} mph",
+                    showInLegend: true,
+                    legendText: "Max. Wind Speed",
+                    markerSize: 5,
+                    color: "rgba(54,158,173,.7)",
+                    dataPoints: getWindMaxFromCSV(data)
+                },
+                {
+                    type: "splineArea",
+                    toolTipContent: "{x}: {y} mph",
+                    showInLegend: true,
+                    legendText: "Avg. Wind Speed",
+                    markerSize: 5,
+                    color: "rgba(25,75,100,.7)",
+                    dataPoints: getWindAvgFromCSV(data)
+                },
+                {
+                    type: "scatter",
+                    toolTipContent: "{x}: {y} mph",
+                    showInLegend: true,
+                    legendText: "Gust Speed",
+                    markerSize: 5,
+                    color: "rgba(10,200,80,.7)",
+                    dataPoints: getGustFromCSV(data)
+                }
+            ]
+        });
+        chart5.render();        
+    });
+
+        $.get("../resources/testSea.csv", function(data){
+            chart6 = new CanvasJS.Chart("chartContainer6", {
+                height: 250,
+                width: 1250,
+                animationEnabled: true,
+                exportEnabled: true,
+                zoomEnabled: true,
+                theme: "light2",
+                title: {
+                    text: "San Francisco Weather (Canvas)",
+                },
+                axisY: {
+                    title: "Sea Level Pressure",
+                    valueFormatString: "##",
+                    interval: 100,
+                    suffix: " inches"
+                },
+                axisX:{
+                    title: "8/29/2013 - 2/24/2014",
+                    valueFormatString: "MM/DD/YYYY" ,
+                    interval: 10,
+                    intervalType: "month"
+                },
+                data: [{
+                    type: "stackedArea",
+                    toolTipContent: "{x}: {y} in",
+                    showInLegend: true,
+                    legendText: "Max. Sea Level Pressure",
+                    markerSize: 5,
+                    color: "rgba(54,158,173,.7)",
+                    dataPoints: getSeaMaxFromCSV(data)
+                },
+                {
+                    type: "stackedArea",
+                    toolTipContent: "{x}: {y} in",
+                    showInLegend: true,
+                    legendText: "Avg. Sea Level Pressure",
+                    markerSize: 5,
+                    color: "rgba(25,75,100,.7)",
+                    dataPoints: getSeaAvgFromCSV(data)
+                },
+                {
+                    type: "stackedArea",
+                    toolTipContent: "{x}: {y} in",
+                    showInLegend: true,
+                    legendText: "Min. Sea Level Pressure",
+                    markerSize: 5,
+                    color: "rgba(10,200,80,.7)",
+                    dataPoints: getSeaMinFromCSV(data)
+                }
+            ]
+        });
+        chart6.render();        
+    });
 
 // --------------------------------------------------------------------------------
 // 1. Render Charts after tabs have been created.
 // 2. Updates the chart to its container size if it has changed.
 // 
 // --------------------------------------------------------------------------------
+
+// $( "#dd" ).change(function() {
+// 	chart.options.data[0].dataPoints = [];
+// 	var e = document.getElementById("dd");
+// 	var selected = e.options[e.selectedIndex].value;
+// 	dps = jsonData1[selected];
+// 	for(var i in dps) {
+// 		chart.options.data[0].dataPoints.push({label: dps[i].label, y: dps[i].y});
+// 	}
+// 	chart.render();
+// });
+
+// $( "#dd2" ).change(function() {
+// 	chart2.options.data[0].dataPoints = [];
+// 	var e = document.getElementById("dd2");
+// 	var selected = e.options[e.selectedIndex].value;
+// 	console.log(selected)
+// 	dps = jsonData2[selected][0];
+// 	for(var i in dps) {
+// 		chart2.options.data[0].dataPoints.push({label: dps[i].label, y: dps[i].y});
+// 	}
+// 	chart2.render();
+// })
+
+// $( "#dd3" ).change(function() {
+// 	chart3.options.data[0].dataPoints = [];
+// 	var e = document.getElementById("dd3");
+// 	var selected = e.options[e.selectedIndex].value;
+// 	console.log(selected)
+// 	dps = jsonData2[selected][0];
+// 	for(var i in dps) {
+// 		chart3.options.data[0].dataPoints.push({label: dps[i].label, y: dps[i].y});
+// 	}
+// 	chart3.render();
+// })
+
+
     $("#tabs").tabs({
         create: function (event, ui) {
             $("#chartContainer").CanvasJSChart(chart);
             $("#chartContainer2").CanvasJSChart(chart2);
             $("#chartContainer3").CanvasJSChart(chart3);
+            $("#chartContainer4").CanvasJSChart(chart4);
+            $("#chartContainer5").CanvasJSChart(chart5);
+            $("#chartContainer6").CanvasJSChart(chart6);              
         },
         activate: function (event, ui) {
             ui.newPanel.children().first().CanvasJSChart().render();
