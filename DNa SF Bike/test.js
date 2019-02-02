@@ -21,6 +21,7 @@
 //    > I did this so I didn't have to create one huge f(x) to access three seperate
 //      csv files
 //    > I thought it'd be easier to access 3 seperate files w/ 3 seperate f(x)'s
+//    > Applied same concept to create more graphs
 // 3. Shoutout to Yifu for helping me with H2Properly parse Dates
 // -------------------------------------------------------------------------------- 
  
@@ -535,7 +536,7 @@
                     intervalType: "month"
                 },
                 data: [{
-                    type: "stackedArea",
+                    type: "stackedColumn",
                     toolTipContent: "{x}: {y} in",
                     showInLegend: true,
                     legendText: "Max. Sea Level Pressure",
@@ -544,7 +545,7 @@
                     dataPoints: getSeaMaxFromCSV(data)
                 },
                 {
-                    type: "stackedArea",
+                    type: "stackedColumn",
                     toolTipContent: "{x}: {y} in",
                     showInLegend: true,
                     legendText: "Avg. Sea Level Pressure",
@@ -553,7 +554,7 @@
                     dataPoints: getSeaAvgFromCSV(data)
                 },
                 {
-                    type: "stackedArea",
+                    type: "stackedColumn",
                     toolTipContent: "{x}: {y} in",
                     showInLegend: true,
                     legendText: "Min. Sea Level Pressure",
