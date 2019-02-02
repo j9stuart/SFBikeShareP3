@@ -536,7 +536,7 @@
                     intervalType: "month"
                 },
                 data: [{
-                    type: "stackedColumn",
+                    type: "stackedArea",
                     toolTipContent: "{x}: {y} in",
                     showInLegend: true,
                     legendText: "Max. Sea Level Pressure",
@@ -545,7 +545,7 @@
                     dataPoints: getSeaMaxFromCSV(data)
                 },
                 {
-                    type: "stackedColumn",
+                    type: "stackedArea",
                     toolTipContent: "{x}: {y} in",
                     showInLegend: true,
                     legendText: "Avg. Sea Level Pressure",
@@ -554,7 +554,7 @@
                     dataPoints: getSeaAvgFromCSV(data)
                 },
                 {
-                    type: "stackedColumn",
+                    type: "stackedArea",
                     toolTipContent: "{x}: {y} in",
                     showInLegend: true,
                     legendText: "Min. Sea Level Pressure",
