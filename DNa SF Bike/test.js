@@ -37,7 +37,6 @@
                         y: parseFloat(points[1]) 		
                     });
                 }
-            // console.log(dataPoints);
             return dataPoints;
         }
 
@@ -53,9 +52,6 @@
                         y: parseFloat(dewData[2]) 		
                     });
                 }
-            // console.log(dewPoints);
-            // console.log(dewLines);
-            // console.log(csv);
             return dewPoints;
         }
 
@@ -71,7 +67,6 @@
                         y: parseFloat(humidityData[3]) 		
                     });
                 }
-            // console.log(humidityPoints);
             return humidityPoints;
         }
 
@@ -87,7 +82,6 @@
                         y: parseFloat(visibilityMaxData[1]) 		
                     });
                 }
-            // console.log(humidityPoints);
             return visibilityMaxPoints;
         }
 
@@ -103,7 +97,6 @@
                         y: parseFloat(visibilityAvgData[2]) 		
                     });
                 }
-            // console.log(humidityPoints);
             return visibilityAvgPoints;
         }
 
@@ -119,7 +112,6 @@
                         y: parseFloat(visibilityMinData[3]) 		
                     });
                 }
-            // console.log(humidityPoints);
             return visibilityMinPoints;
         }
 
@@ -136,7 +128,6 @@
                         y: parseFloat(windMaxData[1]) 		
                     });
                 }
-            // console.log(humidityPoints);
             return windMaxPoints;
         }
 
@@ -152,7 +143,6 @@
                         y: parseFloat(windAvgData[2]) 		
                     });
                 }
-            // console.log(humidityPoints);
             return windAvgPoints;
         }
 
@@ -168,7 +158,6 @@
                         y: parseFloat(gustData[3]) 		
                     });
                 }
-            // console.log(humidityPoints);
             return gustPoints;
         }
 
@@ -184,7 +173,6 @@
                         y: parseFloat(seaMaxData[1]) 		
                     });
                 }
-            // console.log(humidityPoints);
             return seaMaxPoints;
         }
 
@@ -200,7 +188,6 @@
                         y: parseFloat(seaAvgData[2]) 		
                     });
                 }
-            // console.log(humidityPoints);
             return seaAvgPoints;
         }
 
@@ -216,7 +203,6 @@
                         y: parseFloat(seaMinData[3]) 		
                     });
                 }
-            // console.log(humidityPoints);
             return seaMinPoints;
         }
 // --------------------------------------------------------------------------------
@@ -233,7 +219,7 @@
         var chart5;
         var chart6;
 
-        $.get("../resources/test.csv", function(data){
+        $.get("../resources/testMax.csv", function(data){
             chart = new CanvasJS.Chart("chartContainer", {
                 height: 250,
                 width: 1250,
@@ -242,7 +228,7 @@
                 zoomEnabled: true,
                 theme: "light2",
                 title: {
-                    text: "San Francisco Weather (Canvas) [Average]",
+                    text: "San Francisco Weather (Canvas) [Maximum]",
                 },
                 axisY: {
                     title: "Temperature",
@@ -290,7 +276,7 @@
         
         });
 
-        $.get("../resources/testMax.csv", function(data){
+        $.get("../resources/test.csv", function(data){
             chart2 = new CanvasJS.Chart("chartContainer2", {
                 height: 250,
                 width: 1250,
@@ -299,7 +285,7 @@
                 zoomEnabled: true,
                 theme: "light2",
                 title: {
-                    text: "San Francisco Weather (Canvas) [Maximum]",
+                    text: "San Francisco Weather (Canvas) [Average]",
                 },
                 axisY: {
                     title: "Temperature",
@@ -427,16 +413,16 @@
                 },
                 data: [{
                     type: "splineArea",
-                    toolTipContent: "{x}: {y} miles",
+                    toolTipContent: "{x}: {y} miles [Min]",
                     showInLegend: true,
-                    legendText: "Max. Visibility",
+                    legendText: "Min. Visibility",
                     markerSize: 5,
                     color: "rgba(54,158,173,.7)",
                     dataPoints: getVisibilityMinFromCSV(data)
                 },
                 {
                     type: "splineArea",
-                    toolTipContent: "{x}: {y} miles",
+                    toolTipContent: "{x}: {y} miles [Avg]",
                     showInLegend: true,
                     legendText: "Avg. Visibility",
                     markerSize: 5,
@@ -445,9 +431,9 @@
                 },
                 {
                     type: "scatter",
-                    toolTipContent: "{x}: {y} miles",
+                    toolTipContent: "{x}: {y} miles [Max]",
                     showInLegend: true,
-                    legendText: "Min. Visibility",
+                    legendText: "Max. Visibility",
                     markerSize: 5,
                     color: "rgba(10,200,80,.7)",
                     dataPoints: getVisibilityMaxFromCSV(data)
@@ -482,7 +468,7 @@
                 },
                 data: [{
                     type: "splineArea",
-                    toolTipContent: "{x}: {y} mph",
+                    toolTipContent: "{x}: {y} mph [Max]",
                     showInLegend: true,
                     legendText: "Max. Wind Speed",
                     markerSize: 5,
@@ -491,7 +477,7 @@
                 },
                 {
                     type: "splineArea",
-                    toolTipContent: "{x}: {y} mph",
+                    toolTipContent: "{x}: {y} mph [Avg]",
                     showInLegend: true,
                     legendText: "Avg. Wind Speed",
                     markerSize: 5,
@@ -537,7 +523,7 @@
                 },
                 data: [{
                     type: "stackedArea",
-                    toolTipContent: "{x}: {y} in",
+                    toolTipContent: "{x}: {y} in [Max]",
                     showInLegend: true,
                     legendText: "Max. Sea Level Pressure",
                     markerSize: 5,
@@ -546,7 +532,7 @@
                 },
                 {
                     type: "stackedArea",
-                    toolTipContent: "{x}: {y} in",
+                    toolTipContent: "{x}: {y} in [Avg]",
                     showInLegend: true,
                     legendText: "Avg. Sea Level Pressure",
                     markerSize: 5,
@@ -555,7 +541,7 @@
                 },
                 {
                     type: "stackedArea",
-                    toolTipContent: "{x}: {y} in",
+                    toolTipContent: "{x}: {y} in [Min]",
                     showInLegend: true,
                     legendText: "Min. Sea Level Pressure",
                     markerSize: 5,
@@ -574,40 +560,15 @@
 // --------------------------------------------------------------------------------
 
 // $( "#dd" ).change(function() {
-// 	chart.options.data[0].dataPoints = [];
-// 	var e = document.getElementById("dd");
-// 	var selected = e.options[e.selectedIndex].value;
-// 	dps = jsonData1[selected];
-// 	for(var i in dps) {
-// 		chart.options.data[0].dataPoints.push({label: dps[i].label, y: dps[i].y});
-// 	}
-// 	chart.render();
-// });
-
-// $( "#dd2" ).change(function() {
-// 	chart2.options.data[0].dataPoints = [];
-// 	var e = document.getElementById("dd2");
-// 	var selected = e.options[e.selectedIndex].value;
-// 	console.log(selected)
-// 	dps = jsonData2[selected][0];
-// 	for(var i in dps) {
-// 		chart2.options.data[0].dataPoints.push({label: dps[i].label, y: dps[i].y});
-// 	}
-// 	chart2.render();
-// })
-
-// $( "#dd3" ).change(function() {
-// 	chart3.options.data[0].dataPoints = [];
-// 	var e = document.getElementById("dd3");
-// 	var selected = e.options[e.selectedIndex].value;
-// 	console.log(selected)
-// 	dps = jsonData2[selected][0];
-// 	for(var i in dps) {
-// 		chart3.options.data[0].dataPoints.push({label: dps[i].label, y: dps[i].y});
-// 	}
-// 	chart3.render();
-// })
-
+//  	chart.options.data[0].dataPoints = [];
+//  	var e = document.getElementById("dd");
+//     var selected = e.options[e.selectedIndex].value;
+//  	dps = jsonData1[selected];
+//  	for(var i in dps) {
+//  		chart.options.data[0].dataPoints.push({label: dps[i].label, y: dps[i].y});
+//  	}
+//  	chart.render();
+//  });
 
     $("#tabs").tabs({
         create: function (event, ui) {
