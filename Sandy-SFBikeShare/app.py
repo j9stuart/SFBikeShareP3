@@ -6,7 +6,7 @@ import numpy as np
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 from sqlalchemy import inspect
 from sqlalchemy import MetaData
 from sqlalchemy import Table
@@ -33,7 +33,7 @@ db = SQLAlchemy(app)
 # reflect the tables
 #Base.prepare(db.engine, reflect=True)
 
-engine = db.engine
+engine2 = db.engine
 #connection = engine.connect()
 
 
@@ -43,12 +43,35 @@ engine = db.engine
 # Save references to each table
 # Samples_Metadata = Base.classes.sample_metadata
 # Samples = Base.classes.samples
+# The database URI
+engine = create_engine("sqlite:///db/database.sqlite")
+
+# reflect an existing database into a new model
+Base = automap_base()
+# reflect the tables
+Base.prepare(engine, reflect=True)
+
+# Save reference to the table
+Trip = Base.classes.trip
+Station = Base.classes.station
+
+# Create our session (link) from Python to the DB
+session = Session(engine)
+
 
 
 @app.route("/")
 def index():
     """Return the homepage."""
-    return render_template("index.html")
+    
+    dist_city_sql = (f'SELECT DISTINCT city FROM station ')
+    dist_city = pd.read_sql(dist_city_sql, engine2.connect())
+    dist_city_list = dist_city["city"].values.tolist()
+    dist_city_list
+    # results = session.query(Station.city).distinct()
+    # cities = [result[0] for result in results]
+
+    return render_template("index.html", cities=dist_city_list)
 
 @app.route("/names")
 def names():
@@ -62,7 +85,7 @@ def names():
                 'GROUP BY city, yr'
                 )
 
-    avg_city = pd.read_sql(avg_sql, engine.connect())
+    avg_city = pd.read_sql(avg_sql, engine2.connect())
     avg_city['avg_trip'] = avg_city['avg_trip']/60
     avg_city['avg_trip'] = avg_city['avg_trip'].round()
     avg_list = avg_city.to_dict('records')
@@ -105,7 +128,7 @@ def stations():
                 'GROUP BY city, name, yr'
                 )
 
-    avg_station = pd.read_sql(avg_station_sql, engine.connect())
+    avg_station = pd.read_sql(avg_station_sql, engine2.connect())
 
     avg_station['avg_trip'] = avg_station['avg_trip']/60
     avg_station['avg_trip'] = avg_station['avg_trip'].round()
@@ -139,64 +162,172 @@ def stations():
 
     return jsonify(all_yr_station)
 
-# @app.route("/names")
-# def names():
-#     """Return a list of sample names."""
 
-#     # Use Pandas to perform the sql query
-#     stmt = db.session.query(Samples).statement
-#     df = pd.read_sql_query(stmt, db.session.bind)
+@app.route("/bar")
+def default_station_data():
+    # # Query for the top 10 most popular stations
+    # results = session.query(Trip.start_station_name, func.count(Trip.start_station_id)).group_by(Trip.start_station_name).order_by(func.count(Trip.start_station_id).desc()).limit(20).all()
+    
+    # # Create lists from the query results
+    # station_names = [result[0] for result in results]
+    # trips = [result[1] for result in results]
 
-#     # Return a list of the column names (sample names)
-#     return jsonify(list(df.columns)[2:])
+     # Query for the top 20 most popular stations in the bay area
+    top_start_sql = ('SELECT start_station_name, COUNT(start_station_id) as ct FROM trip GROUP BY start_station_name')
+    top_start = pd.read_sql(top_start_sql, engine.connect())
+    top_start_20 = top_start.nlargest(20, 'ct')
+
+    # Create lists from the query results
+    start_station = top_start_20["start_station_name"].values.tolist()
+    start_ct = top_start_20["ct"].values.tolist()
+
+    
+    # end_results = session.query(Trip.end_station_name, func.count(Trip.end_station_id)).group_by(Trip.end_station_name).order_by(func.count(Trip.end_station_id).desc()).limit(20).all()
+    
+    # # Create lists from the query results
+    # end_station_names = [result[0] for result in end_results]
+    # start_ct = [result[1] for result in end_results]
+
+    # Query for the top 20 most popular stations in the bay area
+    top_end_sql = ('SELECT end_station_name, COUNT(end_station_id) as ct FROM trip GROUP BY end_station_name')
+    top_end = pd.read_sql(top_end_sql, engine.connect())
+    top_end_20 = top_end.nlargest(20, 'ct')
+
+    # Create lists from the query results
+    end_station = top_end_20["end_station_name"].values.tolist()
+    end_ct = top_end_20["ct"].values.tolist()
+    
+    print(start_station)
+    print(start_ct)
+    print("Cephra is amazing!")
+
+    # Generate the plot trace
+    trace1 = {
+        "x": start_station,
+        "y": start_ct,
+        "type": "bar"
+    }
+    
+    trace2 = {
+        "x": end_station,
+        "y": end_ct,
+        "type": "bar"
+    }
+    
+    return jsonify(trace1, trace2)
+
+@app.route("/city/<city>")
+def get_city_data(city):
+    # Query for the top 10 most popular stations
+    # print("flask "+ city)
+    # stations = []
+    # if city == "San Jose":
+    #     stations = ['San Jose Diridon Caltrain Station', 'San Jose Civic Center',
+    #    'Santa Clara at Almaden', 'Adobe on Almaden', 'San Pedro Square',
+    #    'Paseo de San Antonio', 'San Salvador at 1st', 'Japantown',
+    #    'San Jose City Hall', 'MLK Library', 'SJSU 4th at San Carlos',
+    #    'St James Park', 'Arena Green / SAP Center',
+    #    'SJSU - San Salvador at 9th', 'Santa Clara County Civic Center',
+    #    'Ryland Park']
+        
+    # if city == "Redwood City":
+    #     stations = ['Franklin at Maple', 'Redwood City Caltrain Station',
+    #    'San Mateo County Center', 'Redwood City Public Library',
+    #    'Stanford in Redwood City', 'Redwood City Medical Center',
+    #    'Mezes Park']
+
+    # if city == "Mountain View":
+    #     stations = ['Mountain View City Hall', 'Mountain View Caltrain Station',
+    #    'San Antonio Caltrain Station', 'Evelyn Park and Ride',
+    #    'San Antonio Shopping Center', 'Castro Street and El Camino Real',
+    #    'Rengstorff Avenue / California Street']
+
+    # if city == "Palo Alto":
+    #     stations = ['Palo Alto Caltrain Station', 'University and Emerson',
+    #    'California Ave Caltrain Station', 'Cowper at University',
+    #    'Park at Olive']
+
+    # if city == "San Francisco":
+    #     stations = ['Clay at Battery', 'Davis at Jackson', 'Commercial at Montgomery',
+    #    'Washington at Kearney', 'Post at Kearney',
+    #    'Embarcadero at Vallejo', 'Spear at Folsom',
+    #    'Harry Bridges Plaza (Ferry Building)', 'Embarcadero at Folsom',
+    #    'Powell Street BART', 'Embarcadero at Bryant',
+    #    'Temporary Transbay Terminal (Howard at Beale)', 'Beale at Market',
+    #    '5th at Howard', 'San Francisco City Hall', 'Golden Gate at Polk',
+    #    'Embarcadero at Sansome', '2nd at Townsend', '2nd at Folsom',
+    #    'Howard at 2nd', '2nd at South Park', 'Townsend at 7th',
+    #    'South Van Ness at Market', 'Market at 10th',
+    #    'Yerba Buena Center of the Arts (3rd @ Howard)',
+    #    'San Francisco Caltrain 2 (330 Townsend)',
+    #    'San Francisco Caltrain (Townsend at 4th)',
+    #    'Powell at Post (Union Square)',
+    #    'Civic Center BART (7th at Market)',
+    #    'Grant Avenue at Columbus Avenue', 'Steuart at Market',
+    #    'Mechanics Plaza (Market at Battery)', 'Market at 4th',
+    #    'Market at Sansome', 'Broadway St at Battery St']
+    # print(stations)
 
 
-# @app.route("/metadata/<sample>")
-# def sample_metadata(sample):
-#     """Return the MetaData for a given sample."""
-#     sel = [
-#         Samples_Metadata.sample,
-#         Samples_Metadata.ETHNICITY,
-#         Samples_Metadata.GENDER,
-#         Samples_Metadata.AGE,
-#         Samples_Metadata.LOCATION,
-#         Samples_Metadata.BBTYPE,
-#         Samples_Metadata.WFREQ,
-#     ]
+    # results = session.query(Trip.start_station_name, func.count(Trip.start_station_id)).filter(Trip.start_station_name.in_(stations)).group_by(Trip.start_station_name).order_by(func.count(Trip.start_station_id).desc()).all()
+    # print(results)
 
-#     results = db.session.query(*sel).filter(Samples_Metadata.sample == sample).all()
+    station_ct_sql =('SELECT city, start_station_name, COUNT(start_station_id) as ct '
+                 'FROM trip JOIN station on trip.start_station_id = station.id '
+                 'GROUP BY city, start_station_name')
 
-#     # Create a dictionary entry for each row of metadata information
-#     sample_metadata = {}
-#     for result in results:
-#         sample_metadata["sample"] = result[0]
-#         sample_metadata["ETHNICITY"] = result[1]
-#         sample_metadata["GENDER"] = result[2]
-#         sample_metadata["AGE"] = result[3]
-#         sample_metadata["LOCATION"] = result[4]
-#         sample_metadata["BBTYPE"] = result[5]
-#         sample_metadata["WFREQ"] = result[6]
+    station_ct = pd.read_sql(station_ct_sql, engine.connect())
 
-#     print(sample_metadata)
-#     return jsonify(sample_metadata)
+    selected_city=city
+    station_ct_select = station_ct[station_ct["city"]==selected_city].nlargest(10, 'ct')
+
+    # Create lists from the query results
+    # station_names = [result[0] for result in results]
+    # start_station_id = [result[1] for result in results]
+
+    station_names = station_ct_select["start_station_name"].values.tolist()
+    start_station_id = station_ct_select["ct"].values.tolist()
+    
+    # # Generate the plot trace
+    trace = {
+        "x": station_names,
+        "y": start_station_id,
+        "type": "bar"
+    }
+
+    # temp = ['1', '2']
+    return jsonify(trace)
 
 
-# @app.route("/samples/<sample>")
-# def samples(sample):
-#     """Return `otu_ids`, `otu_labels`,and `sample_values`."""
-#     stmt = db.session.query(Samples).statement
-#     df = pd.read_sql_query(stmt, db.session.bind)
+@app.route("/end/<city>")
+def end_station_data(city):
+    # Query for the top 10 most popular stations
+    # results = session.query(Trip.end_station_name, func.count(Trip.end_station_id)).group_by(Trip.end_station_name).order_by(func.count(Trip.end_station_id).desc()).limit(20).all()
+    
+    # # Create lists from the query results
+    # station_names = [result[0] for result in results]
+    # end_station_id = [result[1] for result in results]
+    
+    # Query for the top 10 most popular stations
+    station_end_ct_sql =('SELECT city, end_station_name, COUNT(end_station_id) as ct '
+                 'FROM trip JOIN station on trip.start_station_id = station.id '
+                 'GROUP BY city, end_station_name')
 
-#     # Filter the data based on the sample number and
-#     # only keep rows with values above 1
-#     sample_data = df.loc[df[sample] > 1, ["otu_id", "otu_label", sample]]
-#     # Format the data to send as json
-#     data = {
-#         "otu_ids": sample_data.otu_id.values.tolist(),
-#         "sample_values": sample_data[sample].values.tolist(),
-#         "otu_labels": sample_data.otu_label.tolist(),
-#     }
-#     return jsonify(data)
+    station_end_ct = pd.read_sql(station_end_ct_sql, engine.connect())
+
+    selected_city = city
+    station_end_ct_select = station_end_ct[station_end_ct["city"]==selected_city].nlargest(10, 'ct')
+
+    end_station_names = station_end_ct_select["end_station_name"].values.tolist()
+    end_station_id = station_end_ct_select["ct"].values.tolist()
+    
+    # Generate the plot trace
+    trace = {
+        "x": end_station_names,
+        "y": end_station_id,
+        "type": "bar"
+    }
+    return jsonify(trace)
 
 
 if __name__ == "__main__":
