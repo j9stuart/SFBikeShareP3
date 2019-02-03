@@ -1,4 +1,22 @@
 
+# To Run Project - Final:
+
+- Go to **SFBikeShare-Final** folder
+- Run the following in the folder where app.py is located
+```
+export FLASK_DEBUG=1
+export FLASK_ENV=development
+export FLASK_APP=app.py
+flask run
+```
+- Open another terminal window
+- Run the following in the folder where index.html is located
+```
+python -m http.server
+```
+- Visit project at localhost:5000
+
+
 # Project Title: 
  - An Analysis on San Francisco Bike Trip Data
  - Our team is interested in the effects of SF bike data in 
