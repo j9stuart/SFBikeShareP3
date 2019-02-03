@@ -1,5 +1,5 @@
 
-# To Run Project - Final:
+# To Run Project:
 
 - Go to **SFBikeShare-Final** folder
 - Run the following in the folder where app.py is located
@@ -15,6 +15,7 @@ flask run
 python -m http.server
 ```
 - Visit project at localhost:5000
+**Enjoy!**
 
 
 # Project Title: 
